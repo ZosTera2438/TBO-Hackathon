@@ -21,7 +21,7 @@ const fetchData = async (city) => {
   }
 };
 function specificUser(user) {
-  return user == "ERROR_401#";
+  return user == "ERROR_401#" || user == "uday shikhar das Ep";
 }
 
 // QR code
@@ -36,7 +36,7 @@ whatsapp.on("ready", async () => {
 
 let data;
 let formData = {};
-let step = -1;
+let step = -2;
 const days = [
   "Monday",
   "Tuesday",
@@ -50,7 +50,7 @@ whatsapp.on("message", async (message) => {
   if (specificUser((await message.getChat()).name)) {
     try {
       switch (step) {
-        case -1:
+        case -2:
           // Send initial message
           whatsapp.sendMessage(
             message.from,
@@ -71,15 +71,25 @@ whatsapp.on("message", async (message) => {
             message.from,
             `Type your name to start the bot system...`
           );
-          step = 0;
+          step = -1;
           break;
-        case 0:
+        case -1:
           // Handle name and ask location
           formData.name = message.body;
           formData.phone = (await message.getContact()).number;
           whatsapp.sendMessage(
             message.from,
-            `Hi *${formData.name}*, you can start the form filling by entering a city using */city [city name]*`
+            `Hi *${formData.name}*, please type your address.`
+          );
+
+          step = 0;
+          break;
+        case 0:
+          // Handle location and ask address
+          formData.address = message.body;
+          whatsapp.sendMessage(
+            message.from,
+            `*${formData.name}*, you can start the form filling by entering a city using */city [city name]*`
           );
 
           step = 1;
@@ -204,23 +214,16 @@ whatsapp.on("message", async (message) => {
             step = 6;
             formData.day = days[selectedDayIndex];
             const formattedData =
-              `Please review the information you've entered:\n
-              ` +
-              `-> Name: *${formData.name}*\n
-              ` +
-              `-> Contact No.: *${formData.phone}*\n
-              ` +
-              `-> Hospital: *${formData.hospitalName}*\n
-              ` +
-              `-> Department: *${formData.departmentName}*\n
-              ` +
-              `-> Doctor: *${formData.doctorName}*\n
-              ` +
+              `Please review the information you've entered:\n` +
+              `-> Name: *${formData.name}*\n` +
+              `-> Address: *${formData.address}*\n` +
+              `-> Contact No.: *${formData.phone}*\n` +
+              `-> Hospital: *${formData.hospitalName}*\n` +
+              `-> Department: *${formData.departmentName}*\n` +
+              `-> Doctor: *${formData.doctorName}*\n` +
               `-> Appointment Day: *${formData.day}*\n` +
-              `\nIs this information correct?\n
-              ` +
-              `1. Yes, continue with payment.\n
-              ` +
+              `\nIs this information correct?\n` +
+              `1. Yes, continue with payment.\n` +
               `2. No, want to refill the form?`;
             message.reply(formattedData);
           } else {
