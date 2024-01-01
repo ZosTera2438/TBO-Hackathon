@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const HospitalForm = () => {
+  const { push } = useRouter();
   const onWheel = (e) => {
     e.target.blur();
   };
@@ -54,6 +56,7 @@ const HospitalForm = () => {
     await axios
       .post("http://localhost:5000/hospital/addHospital", formValue)
       .then((response) => {
+        push(`/register`);
         console.log(response);
       })
       .catch((err) => {

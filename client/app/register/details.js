@@ -10,7 +10,7 @@ const Details = () => {
           <div className="w-full  rounded-lg shadow border sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
             <div className="p-6 space-y-3 md:space-y-5 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-white">
-                Hospital Form
+                Hospital Registration Form
               </h1>
 
               <div className="text-sm">

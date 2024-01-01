@@ -4,3 +4,5 @@ chatbot/node_modules/
 chatbot/.wwebjs_auth/
 chatbot/.wwebjs_cache/
 server/.env
+pay/server/node_modules
+pay/server/.env

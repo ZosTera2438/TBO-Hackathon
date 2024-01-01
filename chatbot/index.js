@@ -21,7 +21,7 @@ const fetchData = async (city) => {
   }
 };
 function specificUser(user) {
-  return user == "ERROR_401#" || user == "uday shikhar das Ep";
+  return user == "uday shikhar das Ep";
 }
 
 // QR code
@@ -107,7 +107,7 @@ whatsapp.on("message", async (message) => {
             } else {
               step = 2;
               const formattedHospitalList = data
-                .map((hospital, i) => `*${i + 1}. ${hospital.hospitalName}*`)
+                .map((hospital, i) => `${i + 1}. ${hospital.hospitalName}`)
                 .join("\n");
 
               message.reply(
@@ -136,7 +136,7 @@ whatsapp.on("message", async (message) => {
             formData.hospital = data[selectedHospitalIndex];
             const departmentList = formData.hospital.departments
               .map(
-                (department, i) => `*${i + 1}. ${department.departmentName}*`
+                (department, i) => `${i + 1}. ${department.departmentName}`
               )
               .join("\n");
             message.reply(
@@ -166,7 +166,7 @@ whatsapp.on("message", async (message) => {
             const doctorList = formData.hospital.departments[
               selectedDepartmentIndex
             ].doctors
-              .map((doctor, i) => `*${i + 1}. ${doctor.doctorName}*`)
+              .map((doctor, i) => `${i + 1}. ${doctor.doctorName}`)
               .join("\n");
             message.reply("Please select a *doctor*:\n" + doctorList);
           } else {
@@ -192,7 +192,7 @@ whatsapp.on("message", async (message) => {
                 selectedDoctorIndex
               ].doctorName;
             const availabilityList = days
-              .map((day, i) => `*${i + 1}. ${day}*`)
+              .map((day, i) => `${i + 1}. ${day}`)
               .join("\n");
             message.reply(
               "Please select a *day* for the appointment:\n" + availabilityList
@@ -236,8 +236,9 @@ whatsapp.on("message", async (message) => {
           // Handle confirmation and proceed to payment or restart
           const confirmation = message.body;
           if (confirmation === "1") {
-            message.reply("Navigating to payment...");
+            message.reply("Click on the payment link to check the fees and make the payment -> http://localhost:5500/pay/client");
             // Implement payment logic here
+            step=-2;
           } else if (confirmation === "2") {
             message.reply(
               "The form has reset now, please start by entering a city using */city [city name]*"
